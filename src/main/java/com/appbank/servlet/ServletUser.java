@@ -1,10 +1,12 @@
 package com.appbank.servlet;
 
 import com.appbank.dao.DaoAddress;
+import com.appbank.dao.DaoBankOperation;
 import com.appbank.dao.DaoClient;
 import com.appbank.dao.DaoRegister;
 import com.appbank.models.ModelAddress;
 import com.appbank.models.ModelClient;
+import com.appbank.models.ModelRegister;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -18,21 +20,41 @@ public class ServletUser extends HttpServlet {
     DaoClient daoClient = new DaoClient();
     DaoAddress daoAddress = new DaoAddress();
     DaoRegister daoRegister = new DaoRegister();
+    DaoBankOperation daoBankOperation = new DaoBankOperation();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-
         try {
+            String action = request.getParameter("action");
+            Long id = (Long) request.getSession().getAttribute("id");
+
             if (action.equalsIgnoreCase("formUser")) {
-                Long id = (Long) request.getSession().getAttribute("id");
                 ModelClient modelClient = daoClient.queryUserById(id);
                 ModelAddress modelAddress = daoAddress.queryUserById(id);
 
                 request.setAttribute("client", modelClient);
                 request.setAttribute("address", modelAddress);
+
                 request.getRequestDispatcher("/main/formClient.jsp").forward(request, response);
 
+            } else if (action.equalsIgnoreCase("balance")) {
+                String page = request.getParameter("page");
+                ModelRegister modelRegister = daoBankOperation.balanceById(id);
+                request.getSession().setAttribute("balance", modelRegister);
+
+                if (page.equalsIgnoreCase("main")) {
+                    request.getRequestDispatcher("/main/main.jsp").forward(request, response);
+
+                } else if (page.equalsIgnoreCase("withdraw")) {
+                    request.getRequestDispatcher("/main/withdraw.jsp").forward(request, response);
+
+                }else if (page.equalsIgnoreCase("transfer")) {
+                    request.getRequestDispatcher("/main/transfer.jsp").forward(request, response);
+
+                }else if (page.equalsIgnoreCase("deposit")) {
+                    request.getRequestDispatcher("/main/deposit.jsp").forward(request, response);
+                }
             }
 
         } catch (Exception e) {
@@ -101,6 +123,46 @@ public class ServletUser extends HttpServlet {
                 }
 
                 request.getRequestDispatcher("/main/infoAcc.jsp").forward(request, response);
+
+            } else if (action.equalsIgnoreCase("withdraw")) {
+                String id = request.getParameter("id");
+                String withdrawValue = request.getParameter("withdrawValue");
+                withdrawValue = withdrawValue.replace("R$ ", "").replace(".", "").replace(",", ".");
+
+                String msg = "Você não possui valor suficiente.";
+                Boolean test = daoBankOperation.withdraw(Double.parseDouble(withdrawValue), Integer.parseInt(id));
+                if (test) {
+                    msg = "Saque realizado com sucesso!";
+                }
+
+                request.setAttribute("msg", msg);
+                request.getRequestDispatcher("/main/withdraw.jsp").forward(request, response);
+
+            } else if (action.equalsIgnoreCase("deposit")) {
+                String id = request.getParameter("id");
+                String depositValue = request.getParameter("depositValue");
+                depositValue = depositValue.replace("R$ ", "").replace(".", "").replace(",", ".");
+
+                daoBankOperation.deposit(Double.parseDouble(depositValue), Integer.parseInt(id));
+                request.getRequestDispatcher("/main/deposit.jsp").forward(request, response);
+
+            } else if (action.equalsIgnoreCase("transfer")) {
+                String id = request.getParameter("id");
+                String account = request.getParameter("account");
+                String agency = request.getParameter("agency");
+                String transferValue = request.getParameter("transferValue");
+                transferValue = transferValue.replace("R$ ", "").replace(".", "").replace(",", ".");
+
+                String msg = "Você não possui valor suficiente ou conta não encontrada.";
+
+                Boolean testOne = daoBankOperation.transfer(account, agency, Double.parseDouble(transferValue), Integer.parseInt(id));
+
+                if (testOne) {
+                    msg = "Transferência realizada com sucesso!";
+                }
+
+                request.setAttribute("msg", msg);
+                request.getRequestDispatcher("/main/transfer.jsp").forward(request, response);
             }
 
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.appbank.servlet;
 
 import com.appbank.connection.SingleConnection;
+import com.appbank.dao.DaoBankOperation;
 import com.appbank.dao.DaoClient;
 import com.appbank.dao.DaoLogin;
 import com.appbank.models.ModelClient;
@@ -18,6 +19,7 @@ public class ServletLogin extends HttpServlet {
     private Connection connection;
     private DaoLogin daoLogin = new DaoLogin();
     private DaoClient daoClient = new DaoClient();
+    private DaoBankOperation daoBankOperation = new DaoBankOperation();
 
     public ServletLogin() {
         connection = SingleConnection.getConnection();
@@ -53,6 +55,8 @@ public class ServletLogin extends HttpServlet {
             modelRegister.setEmail(email);
             modelRegister.setPassword(password);
 
+            ModelRegister balance = daoBankOperation.balance(email, password);
+
             ModelRegister loggedUser = daoLogin.userExists(modelRegister);
             if (email.isEmpty() || password.isEmpty()) {
                 msg = "Preencha todos os campos";
@@ -66,6 +70,7 @@ public class ServletLogin extends HttpServlet {
                 request.getSession().setAttribute("loggedUserId", loggedUser);
                 request.getSession().setAttribute("id", loggedUser.getId());
                 request.getSession().setAttribute("client", modelClient);
+                request.getSession().setAttribute("balance", balance);
 
 
                 if (url == null || url.equals("null")) {

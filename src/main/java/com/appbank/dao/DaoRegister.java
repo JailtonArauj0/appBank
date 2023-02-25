@@ -37,9 +37,9 @@ public class DaoRegister {
             statement.setString(1, newPassword);
             statement.setString(2, oldPassword);
             statement.setLong(3, Id);
-            Integer retorno = statement.executeUpdate();
+            Integer dataReturn = statement.executeUpdate();
             connection.commit();
-            return retorno;
+            return dataReturn;
 
         } catch (SQLException e) {
             e.printStackTrace();

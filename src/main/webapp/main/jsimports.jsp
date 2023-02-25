@@ -4,4 +4,3 @@
 <script src="<%=request.getContextPath()%>/main/assets/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/main/assets/vendors/fontawesome/all.min.js"></script>
 <script src="<%=request.getContextPath()%>/main/assets/js/main.js"></script>
-

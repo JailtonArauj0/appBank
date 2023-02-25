@@ -20,13 +20,14 @@
             </div>
         </div>
         <section class="section">
-
-            <div style="font-size: large; padding-top: 2%">
-                <p>Saldo atual:</p>
-                <p style="margin-top: 1%" class="auth-subtitle mb-5">R$ 1000,00</p>
-                <i class="fa-solid fa-house"></i>
+            <div class="card" style="margin-top: 15px; width: 15%">
+                <div class="card-header">
+                    <h4 class="card-title">Saldo atual:</h4>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">R$ ${balance.balance}</h4>
+                </div>
             </div>
-
         </section>
     </div>
 </div>
