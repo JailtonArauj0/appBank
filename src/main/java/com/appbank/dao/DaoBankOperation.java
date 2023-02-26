@@ -6,6 +6,7 @@ import com.appbank.models.ModelRegister;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DaoBankOperation {
     private Connection connection;
@@ -52,29 +53,52 @@ public class DaoBankOperation {
         }
     }
 
-    public Boolean transfer(String accNumber, String agencyNumber, Double value, int id) {
+    public Boolean transfer(String accNumber, String agencyNumber, Double value, int id) throws SQLException {
         try {
             if (verifyBalance(value, id)) {
-                withdraw(value, id);
-
                 String sql1 = "UPDATE account SET balance=balance + ? WHERE account_number=? AND agency=?";
                 PreparedStatement statement1 = connection.prepareStatement(sql1);
                 statement1.setDouble(1, value);
                 statement1.setString(2, accNumber);
                 statement1.setString(3, agencyNumber);
                 int dataReturn = statement1.executeUpdate();
-                connection.commit();
-                return dataReturn > 0;
 
-            } else {
-                return false;
+                if (dataReturn == 1) {
+                    withdraw(value, id);
+                    return true;
+                } else {
+                    return false;
+                }
             }
-
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
+            connection.rollback();
             return false;
         }
     }
+
+//    public int withdrawTransfer(double value, Integer Id) {
+//        try {
+//            if (verifyBalance(value, Id)) {
+//
+//                String sql = "UPDATE account SET balance = balance - ? WHERE id=?";
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//                statement.setDouble(1, value);
+//                statement.setInt(2, Id);
+//                statement.executeUpdate();
+//                connection.commit();
+//                return 1;
+//
+//            } else {
+//                return 0;
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
 
 
     public Boolean verifyBalance(Double value, int Id) {
@@ -101,7 +125,7 @@ public class DaoBankOperation {
             statement.setString(1, email);
             statement.setString(2, password);
             ResultSet query = statement.executeQuery();
-
+            connection.commit();
             while (query.next()) {
                 modelRegister.setBalance(Double.valueOf(query.getString("balance")));
             }
@@ -120,7 +144,7 @@ public class DaoBankOperation {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet query = statement.executeQuery();
-
+            connection.commit();
             while (query.next()) {
                 modelRegister.setBalance(Double.valueOf(query.getString("balance")));
             }

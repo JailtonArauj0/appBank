@@ -1,14 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jailt
-  Date: 17/02/2023
-  Time: 15:44
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="head.jsp"></jsp:include>
+    <title>Register - AppBank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/assets/css/app.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/assets/css/pages/auth.css">
 </head>
 <body>
 
@@ -18,7 +16,7 @@
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
                     <div class="auth-logo">
-                        <a href="index.html"><img src="<%=request.getContextPath()%>/main/assets/images/logo/logo.png" alt="Logo"></a>
+                        <a href="index.html"><img height="200px" src="<%=request.getContextPath()%>/main/assets/images/logo/logo.png" alt="Logo"></a>
                     </div>
                     <h1 class="auth-title">Registre-se</h1>
                     <p class="auth-subtitle mb-5">Preencha seus dados abaixo para registrar-se.</p>

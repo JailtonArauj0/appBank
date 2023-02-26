@@ -17,7 +17,10 @@
         <div class="col-lg-5 col-12">
             <div id="auth-left">
                 <div class="auth-logo">
-                    <a href="index.jsp"><img src="<%=request.getContextPath()%>/main/assets/images/logo/logo.png" alt="Logo"></a>
+                    <a href="index.jsp">
+                        <img  src="<%=request.getContextPath()%>/main/assets/images/logo/logo.png" alt="Logo">
+
+                    </a>
                 </div>
                 <h1 class="auth-title">Entrar</h1>
                 <p class="auth-subtitle mb-5">Entre com os dados utilizados durante a criação da conta.</p>

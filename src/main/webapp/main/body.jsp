@@ -6,8 +6,10 @@
             <div class="sidebar-header">
                 <div class="d-flex justify-content-between">
                     <div class="logo">
-                        <a href="<%=request.getContextPath()%>/ServletUser?action=balance&page=main&id=${loggedUserId.id}"><img src="<%=request.getContextPath()%>/main/assets/images/logo/logo.png"
-                                                  alt="Logo" srcset=""></a>
+                        <a href="<%=request.getContextPath()%>/ServletUser?action=balance&page=main&id=${loggedUserId.id}">
+                            <img style="margin-left: 20px" src="<%=request.getContextPath()%>/main/assets/images/logo/logo.png"
+                                                  alt="Logo" srcset="">
+                        </a>
                     </div>
                     <div class="toggler">
                         <a href="<%=request.getContextPath()%>/ServletUser?action=balance&page=main&id=${loggedUserId.id}" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>

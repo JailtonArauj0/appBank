@@ -29,7 +29,7 @@ public class ServletSignIn extends HttpServlet {
             modelRegister.setEmail(email);
             modelRegister.setPassword(password);
             modelRegister.setAccountNumber(accNumber.accNumber());
-            modelRegister.setAgencyNumber(accNumber.agencyNumber());
+            modelRegister.setAgencyNumber(1288);
 
             daoRegister.createAccount(modelRegister);
             request.setAttribute("msg", "Conta criada com sucesso!");

@@ -144,6 +144,7 @@ public class ServletUser extends HttpServlet {
                 depositValue = depositValue.replace("R$ ", "").replace(".", "").replace(",", ".");
 
                 daoBankOperation.deposit(Double.parseDouble(depositValue), Integer.parseInt(id));
+                request.setAttribute("msg", "Depósito realizado com sucesso!");
                 request.getRequestDispatcher("/main/deposit.jsp").forward(request, response);
 
             } else if (action.equalsIgnoreCase("transfer")) {

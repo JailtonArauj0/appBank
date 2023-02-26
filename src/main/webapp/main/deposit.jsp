@@ -28,6 +28,7 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm">
                     Depositar
                 </button>
+                <span>${msg}</span>
 
 
                 <div class="modal fade text-left" id="inlineForm" tabindex="-1"
