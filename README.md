@@ -16,7 +16,7 @@ Sistema de um banco usando Java, com funções de deposito, saque e transferênc
 
 ### 📌 Features
 
-1. [x] Login e Registro
+1. [x] Cadastro de usuário e Login
 2. [x] Saque
 3. [x] Depósito
 4. [x] Transferência
