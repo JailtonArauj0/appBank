@@ -8,7 +8,7 @@ public class SingleConnection {
     private static String port = "5432";
     private static String database = "appbank";
     private static String user = "postgres";
-    private static String password = "13201320";
+    private static String password = "";
     private static Connection connection = null;
 
     public static Connection getConnection() {
